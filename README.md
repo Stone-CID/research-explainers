@@ -6,6 +6,7 @@ A shared home for standalone research explainers. Each explainer has its own per
 
 - Collection: https://stone-cid.github.io/research-explainers/
 - Albany explainer: https://stone-cid.github.io/research-explainers/CID-manduca-exp-taxfrag-albany.html
+- Detroit explainer: https://stone-cid.github.io/research-explainers/CID-manduca-exp-taxfrag-detroit.html
 
 ## Publishing
 
@@ -24,6 +25,7 @@ Keep existing filenames stable so shared URLs keep working. No separate reposito
 
 - `index.html`: accessible, responsive collection index.
 - `CID-manduca-exp-taxfrag-albany.html`: original supplied Albany explainer, preserved without edits. Its bundled scripts, fonts, and data unpack in the browser; JavaScript is required.
+- `CID-manduca-exp-taxfrag-detroit.html`: original supplied Detroit explainer, preserved without edits. Its bundled scripts, fonts, and data unpack in the browser; JavaScript is required.
 - `.nojekyll`: serve the static files without Jekyll processing.
 
 ## Preview locally
@@ -32,7 +34,7 @@ Keep existing filenames stable so shared URLs keep working. No separate reposito
 python3 -m http.server 8000
 ```
 
-Open http://localhost:8000/ and follow the Albany link. Stop the server with Ctrl-C.
+Open http://localhost:8000/ and follow either explainer link. Stop the server with Ctrl-C.
 
 ## Content and reuse
 
