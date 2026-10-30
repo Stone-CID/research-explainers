@@ -2,3 +2,5 @@
 Thumbs.db
 __pycache__/
 *.log
+node_modules/
+__pycache__/

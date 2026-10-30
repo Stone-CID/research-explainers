@@ -24,7 +24,7 @@ Keep existing filenames stable so shared URLs keep working. No separate reposito
 ## Current files
 
 - `index.html`: accessible, responsive collection index.
-- `CID-manduca-exp-taxfrag-albany.html`: original supplied Albany explainer, preserved without edits. Its bundled scripts, fonts, and data unpack in the browser; JavaScript is required.
+- `CID-manduca-exp-taxfrag-albany.html`: revised Albany explainer using the October 30, 2026 exemption data, tax-rate/property-tax comparisons, and an exemptions map toggle. Editable source, provenance, regeneration instructions, and tests are in [`albany-explainer/`](albany-explainer/README.md). Static charts and the full data table remain readable without JavaScript.
 - `CID-manduca-exp-taxfrag-detroit.html`: original supplied Detroit explainer, preserved without edits. Its bundled scripts, fonts, and data unpack in the browser; JavaScript is required.
 - `.nojekyll`: serve the static files without Jekyll processing.
 
