@@ -28,12 +28,18 @@ meta = {'received':'2026-10-30','source_file':source.name,'source_sha256':hashli
 (DIR/'data/observations.json').write_text(json.dumps({'metadata':meta,'rows':rows},separators=(',',':'))+'\n')
 A,C,T = [by_id[x] for x in ['36:01000:10580','36:001_17343:10580','36:75484:10580']]
 usd=lambda v:'$'+format(round(v),',')
+rounded_usd=lambda v:'$'+format(round(v/100)*100,',')
 pct=lambda v:format(v*100,'.1f')+'%'
 rate=lambda v:format(v*100,'.2f')+'%'
 name=lambda r:r['fu_name'].rsplit(' ',1)[1].capitalize()+' of '+r['fu_name'].rsplit(' ',1)[0]
 values={'metro_pc':usd(metro_pc),'metro_total':'$'+format(total/1e9,'.1f')+' billion','metro_pop':format(round(pop),','),'metro_exempt':pct(1-total/raw),'albany_fcr_pct':str(round(A['pc_value_tot']/metro_pc*100))+'%','rate_higher':str(round((A['taxrt_tot']/C['taxrt_tot']-1)*100))+'%','tax_lower':str(round((1-A['pc_tax_tot']/C['pc_tax_tot'])*100))+'%','albany_excluded_pc':usd(A['pc_value_raw']-A['pc_value_tot'])}
+values['metro_pc_rounded']=rounded_usd(metro_pc)
+values['metro_exempt_rounded']=str(round((1-total/raw)*100))+'%'
 for slug,row in [('albany',A),('colonie',C),('troy',T)]:
-    for key in ['pc_value_tot','pc_value_raw','pc_tax_tot']: values[slug+'_'+key]=usd(row[key])
+    for key in ['pc_value_tot','pc_value_raw','pc_tax_tot']:
+        values[slug+'_'+key]=usd(row[key])
+        values[slug+'_'+key+'_rounded']=rounded_usd(row[key])
+    values[slug+'_exempt_rounded']=str(round(row['exempt_share']*100))+'%'
     values[slug+'_exempt']=pct(row['exempt_share']);values[slug+'_rate']=rate(row['taxrt_tot'])
 # Static charts and table remain readable without JavaScript.
 metrics=[('pc_value_tot','Tax base per resident',usd,150000),('taxrt_tot','Effective property-tax rate',rate,.04),('pc_tax_tot','Property taxes per resident',usd,3200)]
@@ -48,7 +54,7 @@ values['comparison_charts']=''.join(charts)
 exempt=[]
 for row in [A,C,T]:
     share=row['exempt_share'];short=row['fu_name'].split(' ')[0]
-    exempt.append(f'<div class="exempt-row"><div class="row-heading"><span>{short}</span><strong>{pct(share)} exempt</strong></div><div class="stacked" role="img" aria-label="{short}: {pct(share)} of raw property value excluded as exempt"><span class="taxable-part" style="width:{(1-share)*100:.4f}%"></span><span class="exempt-part" style="width:{share*100:.4f}%"></span></div><div class="row-endpoints"><span>{usd(row["pc_value_tot"])} taxable</span><span>{usd(row["pc_value_raw"])} before exclusions</span></div></div>')
+    exempt.append(f'<div class="exempt-row"><div class="row-heading"><span>{short}</span><strong>{pct(share)} exempt</strong></div><div class="stacked" role="img" aria-label="{short}: {pct(share)} of property value is exempt"><span class="taxable-part" style="width:{(1-share)*100:.4f}%"></span><span class="exempt-part" style="width:{share*100:.4f}%"></span></div><div class="row-endpoints"><span>{usd(row["pc_value_tot"])} taxable</span><span>{usd(row["pc_value_raw"])} including exempt property</span></div></div>')
 values['exemption_bars']=''.join(exempt)
 table=[]
 for row in sorted(rows,key=lambda r:name(r)):

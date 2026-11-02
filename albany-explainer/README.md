@@ -51,3 +51,19 @@ The exemption difference is excluded property value, not recoverable revenue. No
 - Covered population: 869,409. Revised total taxable value: $83,017,851,727. Weighted taxable value per resident: $95,487.68384845338.
 - Albany: $60,375.6438543604 taxable value per resident; $113,839.36404549601 before exclusions; 46.96417679368705% exempt.
 - Original map geometry, branding, and local font assets retained. The site's numeric attributes now come exclusively from the revised extract.
+
+## Copy and source notes, November 2, 2026
+
+The narrative uses rounded figures for readability. Charts, map details, and the data table retain their original precision; the source CSV and calculations are unchanged. Public definitions use plain language. Unconfirmed reference years and tax-authority scope appear in a separate researcher-review disclosure.
+
+Technical field mapping:
+
+- `pc_value_tot`: taxable property value per resident, excluding exempt property.
+- `pc_value_raw`: property value per resident, including exempt property.
+- `exempt_share = 1 - value_tot / value_raw`: exempt share of property value.
+- `clpop`: population covered by the study, the denominator for every per-resident figure. `cenpop` contains full Census jurisdiction populations and is not used for these measures.
+- `taxrt_tot = tax_tot / value_tot`: aggregate effective property-tax rate.
+- `pc_tax_tot = tax_tot / clpop`: property taxes per resident.
+- Fiscal-capacity ratio: `pc_value_tot` divided by the region's total taxable value per covered resident, calculated from summed values and population.
+- Geometry joins use state, jurisdiction, and CBSA identifiers; all 100 records match. The map does not specify a boundary vintage.
+- The older residential shares and fragmentation quotient remain omitted because equivalent updated measures were not supplied.

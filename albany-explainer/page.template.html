@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="An Albany research explainer about municipal tax bases, effective property-tax rates, and exempt property. Revised draft for review.">
+  <meta name="description" content="An Albany research explainer about municipal tax bases, effective property-tax rates, and exempt property. Review draft.">
   <title>Albany: One region. Different tax bases. | Stone Center</title>
   <link rel="icon" type="image/svg+xml" href="./albany-explainer/assets/favicon.svg">
   <link rel="stylesheet" href="./albany-explainer/story.css">
@@ -15,14 +15,14 @@
 <header class="site-header">
   <div class="brand-line">
     <a href="https://inequality.umich.edu/" aria-label="Stone Center for Inequality Dynamics home"><img src="./albany-explainer/assets/stone-center-logo.png" alt="Stone Center for Inequality Dynamics, University of Michigan" width="1227" height="72"></a>
-    <span class="draft-label">Research explainer <span aria-hidden="true">/</span> Revised draft for review</span>
+    <span class="draft-label">Research explainer <span aria-hidden="true">/</span> Review draft</span>
   </div>
   <div class="intro">
     <h1>One region.<br>Different tax bases.</h1>
     <div class="intro-copy">
-      <p class="lede">Albany has less taxable property per resident than the town next door. A higher tax rate does not make up the difference. Exempt property helps explain why.</p>
+      <p class="lede">Albany has less taxable property per resident than neighboring Colonie. Even with a higher effective property-tax rate, Albany has fewer property-tax dollars per resident. Tax-exempt property helps explain the difference.</p>
       <p class="byline">Based on research by Robert Manduca, Brian Highsmith, and Jacob Waggoner.</p>
-      <p class="edition">2019 study baseline · Exemption classification revised October 2026</p>
+      <p class="edition"><a href="#methods">About the data and reference years</a></p>
     </div>
   </div>
   <nav class="chapter-links" aria-label="Story chapters"><a href="#region">The region</a><a href="#boundaries">Boundaries</a><a href="#tax-base">Tax base</a><a href="#rates">Rates &amp; taxes</a><a href="#exemptions">Exemptions</a></nav>
@@ -32,57 +32,61 @@
     <div class="story-column">
       <section class="step" id="region" data-chapter="1" aria-labelledby="region-title">
         <p class="eyebrow">The region</p>
-        <h2 id="region-title">Start with the region as a whole.</h2>
+        <h2 id="region-title">A regional average hides local differences.</h2>
         <p>The Albany–Schenectady–Troy metropolitan area includes Albany, Rensselaer, Saratoga, Schenectady, and Schoharie counties.</p>
         <div class="mobile-map" data-map-chapter="1"></div>
-        <p>The revised data record about <strong>{{metro_total}}</strong> in taxable property value across the region, or <strong>{{metro_pc}} per study-covered resident</strong>.</p>
-        <p>That average hides large differences between the cities, towns, and villages within it.</p>
+        <p>Across the five-county region, taxable property is worth about <strong>{{metro_total}}</strong>, or roughly <strong>{{metro_pc_rounded}} per resident</strong>.</p>
+        <p>That property value is distributed unevenly among the region’s cities, towns, and villages.</p>
+        <p class="note">Per-resident figures use the population covered by the study. <a href="#methods">See how population is counted.</a></p>
       </section>
       <section class="step" id="boundaries" data-chapter="2" aria-labelledby="boundaries-title">
         <p class="eyebrow">Local boundaries</p>
-        <h2 id="boundaries-title">Property falls on different sides of a line.</h2>
+        <h2 id="boundaries-title">Local boundaries divide the tax base.</h2>
         <p>Each local government has a property tax base: the property value subject to its taxes within its boundaries.</p>
         <div class="mobile-map" data-map-chapter="2"></div>
-        <p>This map separates <strong>100 local governments</strong>: eight cities, 63 towns, and 29 villages. In the study, property is assigned to the smallest general-purpose local government that can tax it. Village territory is separated from the surrounding town.</p>
+        <p>The map divides the region into <strong>100 cities, towns, and villages</strong>: eight cities, 63 towns, and 29 villages. For this comparison, property within a village is counted with the village rather than the surrounding town.</p>
         <p class="note">Counties, school districts, and special districts can also tax property. Their boundaries are not shown here.</p>
       </section>
       <section class="step" id="tax-base" data-chapter="3" aria-labelledby="base-title">
         <p class="eyebrow">Unequal tax bases</p>
-        <h2 id="base-title">The same population can have very different resources to tax.</h2>
-        <p>Dividing taxable property value by residents lets us compare places of different sizes. Here, <strong>1× is the regional average of {{metro_pc}} per resident</strong>.</p>
+        <h2 id="base-title">Some places have more taxable property per resident.</h2>
+        <p>Comparing taxable property value per resident lets us compare places of different sizes. Here, <strong>1× is the regional average of about {{metro_pc_rounded}} per resident</strong>.</p>
         <div class="ratio-guide"><span><b>0.5×</b>Half the average</span><span><b>1×</b>The average</span><span><b>2×</b>Twice the average</span></div>
         <div class="mobile-map" data-map-chapter="3"></div>
-        <p>Albany has <strong>{{albany_pc_value_tot}} per resident</strong> after exempt property is excluded. That is <strong>{{albany_fcr_pct}} of the regional average</strong>. Colonie town has {{colonie_pc_value_tot}}. Troy has {{troy_pc_value_tot}}.</p>
-        <p class="note">The shading describes property inside each jurisdiction, not the personal wealth of its residents.</p>
+        <p>Albany has about <strong>{{albany_pc_value_tot_rounded}} in taxable property per resident</strong>. That is <strong>{{albany_fcr_pct}} of the regional average</strong>. The town of Colonie has about {{colonie_pc_value_tot_rounded}} per resident; Troy has about {{troy_pc_value_tot_rounded}}.</p>
+        <p class="note">The colors show the value of taxable property per resident. They do not show residents’ incomes or personal wealth.</p>
       </section>
       <section class="step" id="rates" data-chapter="4" aria-labelledby="rates-title">
         <p class="eyebrow">Albany, Colonie, and Troy</p>
-        <h2 id="rates-title">A higher rate does not make up for a smaller base.</h2>
-        <p>Albany’s effective property-tax rate is about <strong>{{rate_higher}} higher than Colonie’s</strong>. Yet the property taxes recorded per resident are about <strong>{{tax_lower}} lower</strong>.</p>
+        <h2 id="rates-title">Albany’s higher tax rate does not close the gap.</h2>
+        <p>Albany’s effective property-tax rate is about <strong>{{rate_higher}} higher than Colonie’s</strong>. Yet its property taxes per resident are about <strong>{{tax_lower}} lower</strong>.</p>
         <div class="mobile-map" data-map-chapter="4"></div>
         <p class="formula">Tax base per resident <span aria-hidden="true">×</span><span class="sr-only">times</span> effective rate <span aria-hidden="true">=</span><span class="sr-only">equals</span> property taxes per resident</p>
         <div class="comparison-charts" aria-label="Comparison of tax base, effective rate, and property taxes">{{comparison_charts}}</div>
-        <p class="note">Each chart has its own labeled scale. Select a place to highlight it on the map. These are the study’s property-tax measures; their scope is under review. <a href="#methods">See definitions.</a></p>
-        <p>Troy has an even smaller tax base and a lower effective rate. Its recorded property taxes are <strong>{{troy_pc_tax_tot}} per resident</strong>, compared with {{albany_pc_tax_tot}} in Albany and {{colonie_pc_tax_tot}} in Colonie.</p>
+        <p class="note">Each chart has its own labeled scale. Select a place to highlight it on the map. Colonie refers to the town of Colonie.</p>
+        <p class="note">We are confirming which local taxing authorities these tax totals include. <a href="#research-review">See review notes.</a></p>
+        <p>Troy has an even smaller tax base and a lower effective rate. Its property taxes are about <strong>{{troy_pc_tax_tot_rounded}} per resident</strong>, compared with about {{albany_pc_tax_tot_rounded}} in Albany and {{colonie_pc_tax_tot_rounded}} in Colonie.</p>
       </section>
       <section class="step" id="exemptions" data-chapter="5" aria-labelledby="exemptions-title">
         <p class="eyebrow">Exempt property</p>
-        <h2 id="exemptions-title">Nearly half of Albany’s recorded property value is exempt.</h2>
-        <p>Before excluding exempt property, Albany has <strong>{{albany_pc_value_raw}} in property value per resident</strong>. After exclusions, its tax base is <strong>{{albany_pc_value_tot}}</strong>.</p>
-        <p>That is a reduction of <strong>{{albany_excluded_pc}} per resident</strong>, or <strong>{{albany_exempt}}</strong> of the raw value. Colonie’s exempt share is {{colonie_exempt}}; Troy’s is {{troy_exempt}}.</p>
+        <h2 id="exemptions-title">Nearly half of Albany’s property value is tax-exempt.</h2>
+        <p>Tax-exempt property is excluded from the taxable property value shown here.</p>
+        <p>Including tax-exempt property, Albany has about <strong>{{albany_pc_value_raw_rounded}} in property value per resident</strong>. Excluding it leaves about <strong>{{albany_pc_value_tot_rounded}}</strong>.</p>
+        <p>In other words, <strong>{{albany_exempt_rounded}} of Albany’s property value is exempt</strong>, compared with about {{colonie_exempt_rounded}} in Colonie and {{troy_exempt_rounded}} in Troy.</p>
         <fieldset class="basis-toggle" aria-describedby="basis-help">
           <legend>Compare the property values on the map</legend>
           <label><input type="radio" name="exemption-basis" value="raw"><span>Including exempt property</span></label>
           <label><input type="radio" name="exemption-basis" value="tot" checked><span>Excluding exempt property</span></label>
         </fieldset>
-        <p class="note" id="basis-help">Both views use the same dollar-per-resident color scale, boundaries, and map extent. This compares property values before and after exclusions, not different years.</p>
+        <p class="note" id="basis-help">Switch between the two views to see how exemptions change the map. Both use the same color scale and the same underlying property records.</p>
         <div class="mobile-map" data-map-chapter="5"></div>
         <div class="exemption-comparison" aria-label="Share of property value excluded as exempt">
-          <h3>How much value is excluded?</h3>
+          <h3>How much property value is exempt?</h3>
           <div class="stack-key"><span><i class="taxable-key"></i>Taxable value</span><span><i class="exempt-key"></i>Exempt value</span></div>
           {{exemption_bars}}
         </div>
-        <p class="note">Across the whole region, {{metro_exempt}} of raw property value is excluded. Albany’s share is unusually large, although it is not the region’s highest.</p>
+        <p class="note">Across the region, about {{metro_exempt_rounded}} of property value is exempt. In Albany, it is {{albany_exempt_rounded}}.</p>
+        <p class="note">Exempt property value is not the same as lost tax revenue. <a href="#methods">See how to interpret this comparison.</a></p>
       </section>
     </div>
     <aside class="desktop-map-panel" aria-label="Map accompanying the story">
@@ -91,34 +95,38 @@
   </div>
   <section class="closing text-width" aria-labelledby="closing-title">
     <p class="eyebrow">What this helps explain</p>
-    <h2 id="closing-title">Boundaries and exemptions shape what a place can tax.</h2>
-    <p>A smaller tax base means that the same rate produces fewer property-tax dollars per resident. Albany’s much larger exempt share further separates the property value within its borders from the value available to tax.</p>
-    <p>These figures describe the study’s property values and tax measures. They do not establish current municipal revenues, spending, or service quality. Transfers, other revenue sources, payments in lieu of taxes, and spending needs also matter.</p>
-    <p class="note">The value excluded as exempt is not an estimate of revenue that could be recovered by removing exemptions.</p>
+    <h2 id="closing-title">Exempt property helps explain Albany’s smaller tax base.</h2>
+    <p>Albany has less taxable property per resident than Colonie, in part because a much larger share of its property value is exempt. Its higher effective tax rate still leaves it with fewer property-tax dollars per resident.</p>
+    <p>Property taxes are only one source of local funding. These comparisons do not show a community’s full budget or the quality of its public services.</p>
   </section>
   <section class="explore-section" id="explore" aria-labelledby="explore-title">
     <div class="explore-copy"><p class="eyebrow">Explore the comparisons</p><h2 id="explore-title">Find a place in the region.</h2><label for="place-select">City, town, or village</label><select id="place-select"><option value="36:01000:10580">City of Albany</option></select><div id="place-detail" class="place-detail" aria-live="polite"></div><p class="note">The map shows taxable value relative to the regional average. All figures are also available in the table below.</p></div>
     <div id="explore-map" data-map-chapter="4"></div>
   </section>
-  <nav class="research-links" aria-label="Explore the research"><a class="primary-link" href="https://www.taxbasefragmentation.net/" target="_blank" rel="noopener noreferrer">Explore the full research map ↗</a><a href="https://doi.org/10.1093/ser/mwaf055" target="_blank" rel="noopener noreferrer">Read the paper ↗</a><a href="./albany-explainer/data/albany_cbsa_loc2.csv" download>Download the revised Albany data</a></nav>
+  <nav class="research-links" aria-label="Explore the research"><a class="primary-link" href="https://www.taxbasefragmentation.net/" target="_blank" rel="noopener noreferrer">Explore the full research map ↗</a><a href="https://doi.org/10.1093/ser/mwaf055" target="_blank" rel="noopener noreferrer">Read the paper ↗</a><a href="./albany-explainer/data/albany_cbsa_loc2.csv" download>Download the Albany data</a></nav>
   <footer id="methods">
     <h2>Sources and definitions</h2>
-    <p>Research by Robert Manduca, Brian Highsmith, and Jacob Waggoner. Values from the revised Albany extract supplied by Robert Manduca on October 30, 2026. Geometry is retained from the original research map. <strong>This remains a draft for researcher review.</strong></p>
-    <details><summary>How the figures are calculated, and what remains to confirm</summary>
+    <p>Research by Robert Manduca, Brian Highsmith, and Jacob Waggoner. Albany data supplied by Robert Manduca on October 30, 2026, with improved identification of tax-exempt property. Map boundaries come from the research map. <strong>Draft for researcher review.</strong></p>
+    <details><summary>How to read the figures</summary>
       <ul>
-        <li><strong>Tax base:</strong> <code>pc_value_tot</code>, the value per resident after the updated exemption exclusions. <strong>Before exclusions:</strong> <code>pc_value_raw</code>. The exempt share is <code>1 − value_tot / value_raw</code>, a share of property value, not a count of properties.</li>
-        <li><strong>Population:</strong> all per-capita measures use <code>clpop</code>, the study-covered population. The regional total is {{metro_pop}}. This differs from full Census jurisdiction totals in <code>cenpop</code>.</li>
-        <li><strong>Effective property-tax rate:</strong> <code>taxrt_tot = tax_tot / value_tot</code>. Property taxes per resident are <code>pc_tax_tot = tax_tot / clpop</code>. These are aggregate study measures, not a quoted statutory rate or an individual household’s tax bill. The scope of taxing authorities and relationship to municipal budget receipts remain to be confirmed with the researcher.</li>
-        <li><strong>Regional comparison:</strong> fiscal-capacity ratio equals <code>pc_value_tot</code> divided by the regional taxable value per covered resident, {{metro_pc}}. The regional average is calculated from summed values and population, not a simple average of local figures.</li>
-        <li><strong>Years:</strong> the original study baseline uses 2019 property records and 2020 Census population. The revised extract improves exemption classification; it contains no year columns. Confirmation that all updated measures retain those reference years is pending. “Revised October 2026” identifies the data version, not the property year.</li>
-        <li><strong>Exemptions:</strong> the difference includes properties excluded by the revised classification. This extract does not break exemptions down by ownership or estimate tax losses net of payments in lieu of taxes. It cannot attribute the entire gap to nonprofits.</li>
-        <li><strong>Geography:</strong> all 100 records join to the original city, town, and village geometries using state, jurisdiction, and CBSA identifiers. Village areas remain separate from surrounding towns. The source layer does not specify a boundary vintage.</li>
-        <li><strong>Versions:</strong> the linked national research map and original downloadable tables may carry earlier values. This explainer consistently uses the revised Albany extract. Residential shares and the earlier fragmentation quotient are omitted because updated equivalents were not supplied.</li>
+        <li><strong>Tax base:</strong> the value of property subject to property taxes. “Including exempt property” shows property value before tax-exempt property is excluded; “excluding exempt property” shows the taxable value. The exempt share measures the share of property value that is exempt, rather than the number of properties.</li>
+        <li><strong>Population:</strong> per-resident figures use the population covered by the study’s property records, totaling {{metro_pop}} across the region. This differs from the full Census population of the cities, towns, and villages.</li>
+        <li><strong>Effective property-tax rate:</strong> total property taxes in the study divided by taxable property value. Property taxes per resident divide those taxes by the population covered by the study. The effective rate summarizes a place’s taxes relative to its property value; it is not a quoted statutory rate or an individual household’s tax bill. See the review notes below for the question about which taxing authorities are included.</li>
+        <li><strong>Regional comparison:</strong> 1× means the regional average of {{metro_pc}} in taxable property per resident. The average uses the region’s total taxable property value divided by its covered population, so larger places carry more weight. Narrative figures are rounded; charts and the table show more precise values.</li>
+        <li><strong>Exempt property:</strong> the comparison shows property value excluded from the taxable base. It does not estimate revenue that could be recovered by removing exemptions. Payments in lieu of taxes, other revenue sources, and spending needs also affect local finances. The data do not break exempt property down by owner, so the entire difference cannot be attributed to nonprofits.</li>
+        <li><strong>Geography:</strong> the map shows 100 cities, towns, and villages. Village areas are counted separately from surrounding towns. County, school-district, and special-district boundaries are not shown. The date of the mapped boundaries is not specified in the source.</li>
+      </ul>
+    </details>
+    <details id="research-review"><summary>Notes for researcher review</summary>
+      <ul>
+        <li><strong>Reference years:</strong> the original study baseline uses 2019 property records and 2020 Census population. The Albany file supplied on October 30, 2026, improves exemption classification but contains no year columns. We are confirming whether these figures use the same reference years. October 2026 is the data revision date, not the year the property was valued.</li>
+        <li><strong>Tax totals:</strong> we are confirming which taxing authorities are included, such as cities or towns, counties, and school districts. Until that is established, the property-tax figures should not be read as municipal budget receipts or current revenues.</li>
+        <li><strong>Other versions:</strong> the linked national research map and its downloadable tables may show earlier values. This explainer uses the Albany file supplied on October 30, 2026. Technical field definitions and implementation notes are documented in the repository.</li>
       </ul>
     </details>
     <details id="data-table"><summary>Read the data for all 100 local governments</summary>
-      <p class="note">Dollar measures are per study-covered resident. “Before exclusions” includes exempt property; “taxable” excludes it. Effective rates and tax measures are subject to the definitions above.</p>
-      <div class="table-scroll" tabindex="0" role="region" aria-label="Albany regional data table; scroll horizontally to see all columns"><table><caption>Revised Albany metropolitan-area data, received October 30, 2026</caption><thead><tr><th scope="col">Place</th><th scope="col">Before exclusions / resident</th><th scope="col">Taxable value / resident</th><th scope="col">Exempt value share</th><th scope="col">Effective tax rate</th><th scope="col">Property taxes / resident</th><th scope="col">Relative to region</th><th scope="col">Covered residents</th></tr></thead><tbody>{{data_rows}}</tbody></table></div>
+      <p class="note">Dollar figures are per resident covered by the study. Property value is shown including and excluding exempt property. See the definitions and review notes above for population, reference years, and tax measures.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Albany regional data table; scroll horizontally to see all columns"><table><caption>Albany metropolitan-area data, supplied October 30, 2026</caption><thead><tr><th scope="col">Place</th><th scope="col">Property value per resident, including exempt property</th><th scope="col">Taxable property value per resident</th><th scope="col">Share of property value that is exempt</th><th scope="col">Effective tax rate</th><th scope="col">Property taxes per resident</th><th scope="col">Taxable value compared with regional average</th><th scope="col">Population covered by the study</th></tr></thead><tbody>{{data_rows}}</tbody></table></div>
     </details>
   </footer>
 </main>

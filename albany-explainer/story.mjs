@@ -88,14 +88,14 @@ export async function initStory() {
     instance.labels = svgElement('g', { 'aria-hidden': 'true' });
     svg.append(instance.outlines, instance.labels); frame.append(svg);
     instance.actions = el('div', 'map-actions');
-    instance.zoom = el('button', null, 'Show the full metro');instance.zoom.type = 'button';
+    instance.zoom = el('button', null, 'Show the whole region');instance.zoom.type = 'button';
     instance.zoom.addEventListener('click', () => { state.fullMetro = !state.fullMetro; renderMaps(); });
     instance.boundaries = el('button', null, 'Hide boundaries');instance.boundaries.type = 'button';
     instance.boundaries.addEventListener('click', () => { state.boundaries = !state.boundaries; renderMaps(); });
     instance.actions.append(instance.zoom, instance.boundaries);
     instance.detail = el('div', 'map-detail');instance.detail.setAttribute('aria-live', 'polite');instance.detail.setAttribute('aria-atomic', 'true');
     instance.legend = el('div', 'map-legend');
-    host.replaceChildren(heading, instance.view, frame, instance.actions, instance.detail, instance.legend, el('p', 'map-source', 'Manduca, Highsmith & Waggoner. Revised Albany extract, October 30, 2026.'));
+    host.replaceChildren(heading, instance.view, frame, instance.actions, instance.detail, instance.legend, el('p', 'map-source', 'Source: Manduca, Highsmith & Waggoner. See sources and definitions.'));
     maps.push(instance);
   }
   document.querySelectorAll('[data-map-chapter]').forEach(makeMap);
@@ -111,7 +111,7 @@ export async function initStory() {
     map.view.textContent = exemption ? `${state.basis === 'raw' ? 'Including' : 'Excluding'} exempt property · dollars per resident` : chapter >= 3 ? `Taxable value relative to the regional average of ${usd(model.metro.pc_value_tot)}` : chapter === 2 ? 'Each outlined area is a city, town, or village.' : 'Albany is highlighted within its metropolitan area.';
     map.svg.setAttribute('aria-label', `${titles[chapter]}. ${map.view.textContent} Use arrow keys to move between places, or use the place selector below.`);
     map.zoom.hidden = chapter < 4;
-    map.zoom.textContent = state.fullMetro ? 'Return to the closer view' : 'Show the full metro';
+    map.zoom.textContent = state.fullMetro ? 'Return to the closer view' : 'Show the whole region';
     map.zoom.setAttribute('aria-pressed', String(zoomed));
     map.boundaries.hidden = chapter < 2;
     map.boundaries.textContent = state.boundaries ? 'Hide boundaries' : 'Show boundaries';
@@ -155,11 +155,11 @@ export async function initStory() {
     }
     const row = model.byId.get(state.selectedId);
     const title = el('strong', null, row.name);
-    const desc = chapter < 3 ? chapter === 1 ? 'Outline: the five-county metropolitan area. Shaded: the City of Albany.' : 'Select a boundary, or use the place selector below, to choose a place.' : exemption ? `${usd(metricFor(row, chapter, state.basis))} per resident ${state.basis === 'raw' ? 'before' : 'after'} exemption exclusions. ${percent(row.exempt_share)} of raw property value is exempt.` : `${usd(row.pc_value_tot)} taxable value per resident · ${row.fcr.toFixed(2)}× the regional average.`;
+    const desc = chapter < 3 ? chapter === 1 ? 'Outline: the five-county metropolitan area. Shaded: the City of Albany.' : 'Select a boundary, or use the place selector below, to choose a place.' : exemption ? `${usd(metricFor(row, chapter, state.basis))} per resident ${state.basis === 'raw' ? 'including' : 'excluding'} exempt property. ${percent(row.exempt_share)} of property value is exempt.` : `${usd(row.pc_value_tot)} taxable value per resident · ${row.fcr.toFixed(2)}× the regional average.`;
     map.detail.replaceChildren(title, el('p', null, desc));
     map.legend.replaceChildren();
     if (chapter >= 3) {
-      map.legend.append(el('div', 'legend-title', exemption ? 'Property value per resident · same scale in both views' : 'Taxable value / regional average'));
+      map.legend.append(el('div', 'legend-title', exemption ? 'Property value per resident · same scale in both views' : 'Taxable value compared with the regional average'));
       const items = el('div', 'legend-items');
       for (const bin of exemption ? VALUE_BINS : FCR_BINS) {
         const item = el('span');const swatch = el('i');swatch.style.background = bin.color;swatch.setAttribute('aria-hidden','true');item.append(swatch, document.createTextNode(bin.label));items.append(item);
@@ -175,13 +175,13 @@ export async function initStory() {
     const detail = document.querySelector('#place-detail');
     const dl = el('dl', 'detail-grid');
     const lines = [
-      ['Value before exclusions / resident', usd(row.pc_value_raw)],
-      ['Taxable value / resident', usd(row.pc_value_tot)],
-      ['Exempt share of raw value', percent(row.exempt_share)],
+      ['Property value per resident, including exempt property', usd(row.pc_value_raw)],
+      ['Taxable property value per resident', usd(row.pc_value_tot)],
+      ['Share of property value that is exempt', percent(row.exempt_share)],
       ['Effective property-tax rate', rate(row.taxrt_tot)],
-      ['Property taxes / resident', usd(row.pc_tax_tot)],
-      ['Relative to regional taxable average', row.fcr.toFixed(2)+'×'],
-      ['Study-covered residents', row.clpop.toLocaleString('en-US')],
+      ['Property taxes per resident', usd(row.pc_tax_tot)],
+      ['Taxable value compared with the regional average', row.fcr.toFixed(2)+'×'],
+      ['Population covered by the study', row.clpop.toLocaleString('en-US')],
     ];
     lines.forEach(([label,value]) => dl.append(el('dt', null, label), el('dd', null, value)));
     detail.replaceChildren(el('h3', null, row.name), dl);
