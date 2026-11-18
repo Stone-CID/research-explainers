@@ -24,7 +24,7 @@ pop = sum(r['clpop'] for r in rows)
 total = sum(r['value_tot'] for r in rows)
 raw = sum(r['value_raw'] for r in rows)
 metro_pc = total / pop
-meta = {'received':'2026-10-30','source_file':source.name,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'numeric_authority':'Robert Manduca revised Albany extract, supplied October 30, 2026','property_year_baseline':2019,'population_year_baseline':2020,'reference_years_status':'Revised extract contains no year columns; baseline retained pending author confirmation.','tax_measure_status':'Effective rate equals tax_tot/value_tot. Taxing-authority scope and relation to municipal receipts require author confirmation.','population_denominator':'clpop','geometry_source':'Original Albany explainer, research-explainers commit fc45049. Stable state/jurisdiction/CBSA join.','join':{'matched':100,'data_only':0,'geometry_only':0,'duplicate_keys':0}}
+meta = {'received':'2026-10-30','source_file':source.name,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'numeric_authority':'Robert Manduca revised Albany extract, supplied October 30, 2026','property_year_baseline':2019,'population_year_baseline':2020,'reference_years_status':'Author confirmed 2019 property records and 2020 population.','tax_measure_status':'Effective rate equals tax_tot/value_tot. Totals include all receiving taxing authorities. Troy taxes paid and derived rate are under review.','population_denominator':'clpop','geometry_source':'Original Albany explainer, research-explainers commit fc45049. Stable state/jurisdiction/CBSA join.','join':{'matched':100,'data_only':0,'geometry_only':0,'duplicate_keys':0}}
 (DIR/'data/observations.json').write_text(json.dumps({'metadata':meta,'rows':rows},separators=(',',':'))+'\n')
 A,C,T = [by_id[x] for x in ['36:01000:10580','36:001_17343:10580','36:75484:10580']]
 usd=lambda v:'$'+format(round(v),',')
@@ -42,13 +42,14 @@ for slug,row in [('albany',A),('colonie',C),('troy',T)]:
     values[slug+'_exempt_rounded']=str(round(row['exempt_share']*100))+'%'
     values[slug+'_exempt']=pct(row['exempt_share']);values[slug+'_rate']=rate(row['taxrt_tot'])
 # Static charts and table remain readable without JavaScript.
-metrics=[('pc_value_tot','Tax base per resident',usd,150000),('taxrt_tot','Effective property-tax rate',rate,.04),('pc_tax_tot','Property taxes per resident',usd,3200)]
+metrics=[('pc_value_tot','Tax base per resident',usd,150000),('taxrt_tot','Property tax rate',rate,.04),('pc_tax_tot','Property taxes per resident',usd,3200)]
 charts=[]
 for key,label,fmt,maximum in metrics:
     cards=[]
     for row in [A,C,T]:
         short=row['fu_name'].split(' ')[0]
-        cards.append(f'<button type="button" class="metric-row" data-select="{row["id"]}" aria-pressed="false"><span class="row-name">{short}</span><strong>{fmt(row[key])}</strong><span class="bar-track" aria-hidden="true"><span class="bar-fill {short.lower()}" style="width:{row[key]/maximum*100:.4f}%"></span></span></button>')
+        suffix = ' (under review)' if row is T and key in ('taxrt_tot', 'pc_tax_tot') else ''
+        cards.append(f'<button type="button" class="metric-row" data-select="{row["id"]}" aria-pressed="false"><span class="row-name">{short}</span><strong>{fmt(row[key])}{suffix}</strong><span class="bar-track" aria-hidden="true"><span class="bar-fill {short.lower()}" style="width:{row[key]/maximum*100:.4f}%"></span></span></button>')
     charts.append(f'<div class="metric-chart"><h3>{label}</h3><p class="chart-scale">Scale: 0 to {fmt(maximum)}</p>'+''.join(cards)+'</div>')
 values['comparison_charts']=''.join(charts)
 exempt=[]
@@ -59,6 +60,9 @@ values['exemption_bars']=''.join(exempt)
 table=[]
 for row in sorted(rows,key=lambda r:name(r)):
     cells=[html.escape(name(row)),usd(row['pc_value_raw']),usd(row['pc_value_tot']),pct(row['exempt_share']),rate(row['taxrt_tot']),usd(row['pc_tax_tot']),format(row['pc_value_tot']/metro_pc,'.2f')+'×',format(round(row['clpop']),',')]
+    if row is T:
+        for column in (4, 5):
+            cells[column] += ' (under review)'
     table.append('<tr><th scope="row">'+cells[0]+'</th>'+''.join('<td>'+c+'</td>' for c in cells[1:])+'</tr>')
 values['data_rows']=''.join(table)
 text=(DIR/'page.template.html').read_text()

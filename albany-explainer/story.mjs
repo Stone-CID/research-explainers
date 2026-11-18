@@ -174,12 +174,13 @@ export async function initStory() {
     const row = model.byId.get(state.selectedId);
     const detail = document.querySelector('#place-detail');
     const dl = el('dl', 'detail-grid');
+    const taxNote = row.id === '36:75484:10580' ? ' (under review)' : '';
     const lines = [
       ['Property value per resident, including exempt property', usd(row.pc_value_raw)],
       ['Taxable property value per resident', usd(row.pc_value_tot)],
       ['Share of property value that is exempt', percent(row.exempt_share)],
-      ['Effective property-tax rate', rate(row.taxrt_tot)],
-      ['Property taxes per resident', usd(row.pc_tax_tot)],
+      ['Property tax rate', rate(row.taxrt_tot) + taxNote],
+      ['Property taxes per resident', usd(row.pc_tax_tot) + taxNote],
       ['Taxable value compared with the regional average', row.fcr.toFixed(2)+'×'],
       ['Population covered by the study', row.clpop.toLocaleString('en-US')],
     ];
